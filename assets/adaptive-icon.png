@@ -1,0 +1,37 @@
+<boltAction type="file" filePath="assets/favicon.png"/>
+  <boltAction type="file" filePath="assets/icon.png"/>
+  <boltAction type="file" filePath="assets/splash.png"/>
+  <boltAction type="file" filePath="src/App.tsx">
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './screens/HomeScreen';
+import WallpaperGeneratorScreen from './screens/WallpaperGeneratorScreen';
+import FavoritesScreen from './screens/FavoritesScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import { StatusBar } from 'expo-status-bar';
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+import { DarkTheme, LightTheme } from './themes';
+
+const Stack = createStackNavigator();
+
+const App = () => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? DarkTheme : LightTheme;
+
+  return (
+    <AppearanceProvider>
+      <NavigationContainer theme={theme}>
+        <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Generator" component={WallpaperGeneratorScreen} />
+          <Stack.Screen name="Favorites" component={FavoritesScreen} />
+          <Stack.Screen name="Settings" component={SettingsScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AppearanceProvider>
+  );
+};
+
+export default App;
